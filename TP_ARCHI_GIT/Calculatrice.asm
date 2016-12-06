@@ -71,6 +71,23 @@ Convert			movem.l	a0/d0,-(a7)
 				rts
 				
 				
+IsMaxError		movem.l	a0/d0,-(a7)
+				
+				jsr		StrLen
+				
+				cmpi.l	#5,d0
+				bhi		\notCorrect
+				blo 	\isCorrect
+				
+\notCorrect		ori.b	#%00000100,ccr
+				jmp		\quit
+
+\isCorrect		andi.b 	#%11111011,ccr
+
+
+\quit			movem.l	(a7)+,d0/a0
+				rts
+				
 StrLen			move.l	a0,-(a7)
 				clr.l	d0
 
