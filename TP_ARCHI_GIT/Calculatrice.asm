@@ -11,7 +11,7 @@ vector_01		dc.l	Main
 Main			lea		sTest,a0
 				move.b	#24,d1
 				move.b 	#20,d2
-				jsr 	IsCharError
+				jsr 	StrLen
 				
 				illegal
 				
@@ -69,5 +69,18 @@ Convert			movem.l	a0/d0,-(a7)
 				
 \quit       	movem.l	(a7)+,d1/a0
 				rts
+				
+				
+StrLen			move.l	a0,-(a7)
+				clr.l	d0
+
+\loop			tst.b	(a0)+
+				beq 	\quit
+				
+				addq.l	#1,d0
+				bra 	\loop
+				
+\quit			movea.l	(a7)+,a0
+				rts
 ; Donnees
-sTest 			dc.b	"1321c54",0
+sTest 			dc.b	"13214",0
